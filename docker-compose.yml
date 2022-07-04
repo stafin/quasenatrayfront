@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+
+    # PHP service
+    app:
+        build: .
+        container_name: php-app-teste
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        networks:
+            - appteste-network
+
+    # Nginx service
+    nginx:
+        image: nginx:alpine
+        container_name: php-nginx-teste
+        ports:
+            - 8000:80
+        volumes:
+            - ./:/var/www
+            - ./nginx/conf.d/:/etc/nginx/conf.d/
+        networks:
+            - appteste-network
+
+networks:
+    appteste-network:
+        driver: bridge
